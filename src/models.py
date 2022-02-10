@@ -1,6 +1,6 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -13,8 +13,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(40), unique=True, nullable=False)
     password = Column(String(12), nullable=False)
-    is_active = Column(String(2), nullable=False)
-    User_fav = relationship('User_fav')
+    is_active = Column(Boolean(), nullable=False)
+    User_fav = relationship('Favorites')
 
 class Planets(Base):
     __tablename__ = 'Planets'
@@ -32,7 +32,7 @@ class Favorites(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('User.id'))
-    users = relationship(User)
+    users = relationship('User')
     Character_fav = Column(String(25), ForeignKey('Characters.id'))
     Planet_fav = Column(String(25), ForeignKey('Planets.id'))
 
