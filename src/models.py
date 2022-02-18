@@ -14,7 +14,7 @@ class User(Base):
     username = Column(String(40), unique=True, nullable=False)
     password = Column(String(12), nullable=False)
     is_active = Column(Boolean(), nullable=False)
-    User_fav = relationship('Favorites')
+    user_fav = Column(Boolean(), primary_key=True, nullable=True)
 
 class Planets(Base):
     __tablename__ = 'Planets'
@@ -28,11 +28,11 @@ class Characters(Base):
 
 
 class Favorites(Base):
-    __tablename__ = 'favorites'
+    __tablename__ = 'Favorites'
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('User.id'))
-    users = relationship('User')
+    user_fav = Column(Boolean(), ForeignKey('User.id'))
     Character_fav = Column(String(25), ForeignKey('Characters.id'))
     Planet_fav = Column(String(25), ForeignKey('Planets.id'))
 
